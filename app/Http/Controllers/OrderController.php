@@ -85,7 +85,7 @@ class OrderController extends Controller
         Order::where('payment_id', $paymentId)->where('status', 1)->update(['status' => 3]);
         $payment->where('id', $paymentId)->update(['total' => Order::where('payment_id', $paymentId)->where('status', 2)->sum('harga')]);
 
-        Mail::to($payment->find($paymentId)->user->email)->send(new OrderAccepted($payment->find($paymentId)));
+        // Mail::to($payment->find($paymentId)->user->email)->send(new OrderAccepted($payment->find($paymentId)));
 
         return back();
     }

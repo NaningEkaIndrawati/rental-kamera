@@ -67,8 +67,8 @@ Route::middleware(['auth','admin'])->group(function () {
     Route::delete('/admin/cancel/{id}',[RentController::class,'destroy'])->name('admin.penyewaan.cancel');
     Route::patch('/accbayar/{id}',[OrderController::class,'accbayar'])->name('accbayar');
 
-    Route::get('/admin/buat-reservasi/{userId}',[AdminController::class,'newOrderIndex'])->name('admin.buatreservasi');
-    Route::post('/admin/buat-reservasi/order/{userId}',[AdminController::class,'createNewOrder'])->name('admin.createorder');
+    Route::get('/admin/buat-reservasi/{penyewaId}',[AdminController::class,'newOrderIndex'])->name('admin.buatreservasi');
+    Route::post('/admin/buat-reservasi/order/{penyewaId}',[AdminController::class,'createNewOrder'])->name('admin.createorder');
 
     // Penyewa atau User
     Route::get('/admin/usermanagement',[AdminController::class,'usermanagement'])->name('admin.user');

@@ -16,7 +16,7 @@ class CreateCartsTable extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('penyewa_id')->references('id')->on('penyewas')->onDelete('cascade');
             $table->foreignId('alat_id')->references('id')->on('alats')->onDelete('cascade');
             $table->integer('harga');
             $table->integer('durasi');

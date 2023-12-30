@@ -16,7 +16,7 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->string('no_invoice');
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('penyewa_id')->references('id')->on('penyewas')->onDelete('cascade');
             $table->integer('total');
             $table->string('bukti')->nullable();
             $table->integer('status')->default(1);

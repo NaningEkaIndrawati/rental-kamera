@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Alat;
+use App\Models\User;
 use App\Models\Carts;
-use App\Models\Category;
 use App\Models\Order;
 use App\Models\Payment;
-use App\Models\User;
+use App\Models\Penyewa;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
     public function index() {
-        $topUser = User::withCount('payment')->orderBy('payment_count', 'DESC')->limit(5)->get();
+        $topUser = Penyewa::withCount('payment')->orderBy('payment_count', 'DESC')->limit(5)->get();
         $topProducts = Alat::withCount('order')->orderBy('order_count', "DESC")->limit(5)->get();
         return view('admin.admin',[
             'loggedUsername' => Auth::user()->name,
-            'total_user' => User::where('role',0)->count(),
+            'total_user' => Penyewa::count(),
             'total_alat' => Alat::count(),
             'total_kategori' => Category::count(),
             'total_penyewaan' => Payment::count(),
@@ -31,7 +33,7 @@ class AdminController extends Controller
 
     public function usermanagement() {
 
-        $user = User::with(['payment'])->get();
+        $user = Penyewa::with(['payment'])->get();
 
         return view('admin.user.user',[
             'penyewa' => $user->where('role', 0)
@@ -42,23 +44,41 @@ class AdminController extends Controller
 
     public function newUser(Request $request) {
         $validated = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:5|max:255',
-            'telepon' => 'required|max:15'
+            'nama' => 'required',
+            'alamat' => 'required',
+            'telepon' => 'required',
+            'gambar-ktp' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
-        $validated['password'] = Hash::make($validated['password']);
-        User::create($validated);
-        $request->session()->flash('registrasi', 'Registrasi Berhasil, Silakan login untuk mulai menyewa');
-
-        return redirect(route('admin.user'));
+        // dd($request->all());
+        if ($request->hasFile('gambar-ktp')) {
+            $file = $request->file('gambar-ktp');
+            $nama_file = time() . '_' . $file->getClientOriginalName();
+            
+            // Simpan file ke storage
+            $path = $file->storeAs('public/gambar_ktp', $nama_file);
+    
+            // Buat link ke direktori public
+            $url = Storage::url($path);
+            // dd($url);
+    
+            Penyewa::create([
+                'nama' => $request->nama,
+                'alamat' => $request->alamat,
+                'telepon' => $request->telepon,
+                'ktp' => $url, // Simpan URL file ke dalam database
+            ]);
+        }
+    
+        $request->session()->flash('registrasi', 'Registrasi Penyewa Berhasil');
+        return redirect()->route('admin.user');
     }
 
-    public function newOrderIndex($userId) {
-        $user = User::find($userId);
+
+
+    public function newOrderIndex($penyewaId) {
+        $user = Penyewa::find($penyewaId);
         $alat = Alat::with(['category'])->get();
-        $cart = Carts::with(['user'])->where('user_id', $userId)->get();
+        $cart = Carts::with(['penyewa'])->where('penyewa_id', $penyewaId)->get();
 
         return view('admin.penyewaan.reservasibaru',[
             'user' => $user,
@@ -68,12 +88,12 @@ class AdminController extends Controller
         ]);
     }
 
-    public function createNewOrder(Request $request, $userId) {
-        $cart = Carts::where('user_id', $userId)->get();
+    public function createNewOrder(Request $request, $penyewaId) {
+        $cart = Carts::where('payment_id', $penyewaId)->get();
         $pembayaran = new Payment();
 
-        $pembayaran->no_invoice = $userId."/".Carbon::now()->timestamp;
-        $pembayaran->user_id = $userId;
+        $pembayaran->no_invoice = $penyewaId."/".Carbon::now()->timestamp;
+        $pembayaran->user_id = $penyewaId;
         $pembayaran->status = 3;
         $pembayaran->total = $cart->sum('harga');
         $pembayaran->save();
@@ -82,7 +102,7 @@ class AdminController extends Controller
             Order::create([
                 'alat_id' => $c->alat_id,
                 'user_id' => $c->user_id,
-                'payment_id' => Payment::where('user_id',$userId)->orderBy('id','desc')->first()->id,
+                'payment_id' => Payment::where('user_id',$penyewaId)->orderBy('id','desc')->first()->id,
                 'durasi' => $c->durasi,
                 'starts' => date('Y-m-d H:i', strtotime($request['start_date'].$request['start_time'])),
                 'ends' => date('Y-m-d H:i', strtotime($request['start_date'].$request['start_time']."+".$c->durasi." hours")),

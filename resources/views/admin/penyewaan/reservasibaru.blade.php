@@ -54,7 +54,7 @@
             <div class="col col-md-4 col-sm-12">
                 <div class="card shadow" id="keranjang">
                     <div class="card-header" id="keranjang">
-                        <b>Keranjang</b> <span class="badge bg-secondary">{{ $user->cart->count() }}</span>
+                        <b>Keranjang</b> <span class="badge bg-secondary">{{ $penyewa->cart->count() }}</span>
                     </div>
                     <div class="card-body">
                         <div>

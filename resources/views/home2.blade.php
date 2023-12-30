@@ -15,21 +15,6 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                {{-- <a class="navbar-brand" href="#">Navbar</a> --}}
-                <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
-                        @if (!Auth::check())
-                        <li class="nav-item">
-                            <a type="button" class="nav-link" aria-current="page" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('daftar') }}">Daftar</a>
-                        </li>
-                        @else
-                        <li class="nav-item"><a class="nav-link" href="{{ route('logout') }}">Logout</a></li>
-                        @endif
-                    </ul>
-                </div>
             </div>
         </nav>
         <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
@@ -37,7 +22,7 @@
                 <h1 class="display-4 fw-normal">Rumah Rental Kamera</h1>
                 <p class="fw-normal">Cek Ketersediaan - Reservasi - Bayar - Ambil - Jangan lupa balikin</p>
                 @if (!Auth::check())
-                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#loginModal">Login / Daftar</button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
                 @endif
             </div>
         </div>
@@ -131,11 +116,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-block justify-content-around">
-                            <div class="text-center my-auto">
-                                <h5 class="fw-bold mb-3">Nikmati kemudahan dalam melakukan reservasi</h5>
-                                <a href="{{ route('daftar') }}" class="btn btn-success mb-4">Daftar Sekarang</a>
-                            </div>
-                            <small>Sudah punya akun? silakan login</small>
+                            
                             <div>
                                 @include('partials.login')
                             </div>
