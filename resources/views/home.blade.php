@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Kancil Rental Kamera Purwokerto</title>
+        <title>Rumah Rental Kamera</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <link href="css/styles.css" rel="stylesheet" />
     </head>
@@ -13,7 +13,7 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
             <div class="container px-4">
-                <a class="navbar-brand" href="/">Kancil Rental Kamera</a>
+                <a class="navbar-brand" href="/">Rumah Rental Kamera</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
@@ -122,7 +122,7 @@
         </section>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
-            <div class="container px-4"><p class="m-0 text-center text-white">&copy; 2022 Kancil Rental Kamera</p></div>
+            <div class="container px-4"><p class="m-0 text-center text-white">&copy; 2022 Rumah Rental Kamera</p></div>
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

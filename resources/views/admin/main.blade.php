@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Admin Area - Kancil Rental Kamera</title>
+        <title>Admin Area - Rumah Rental Camera</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="/css/adminstyles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
@@ -63,10 +63,7 @@
                                 Daftar Penyewa
                             </a>
                             @if (Auth::user()->role == 2)
-                                <a class="nav-link {{ Route::is('superuser.admin') ? 'active' : '' }}" href="{{ route('superuser.admin') }}">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-user-alt"></i></div>
-                                    Manajemen Admin
-                                </a>
+
                             <div class="sb-sidenav-menu-heading">Manajemen Alat</div>
                             <a class="nav-link {{ Route::is('alat.index') ? 'active' : '' }}" href="{{ route('alat.index') }}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
@@ -90,7 +87,7 @@
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Kancil Rental Kamera Purwokerto</div>
+                            <div class="text-muted">Copyright &copy; Rumah Rental Camera</div>
                             <div>
                                 <a href="#">Privacy Policy</a>
                                 &middot;

@@ -38,14 +38,7 @@ class AdminController extends Controller
         ]);
     }
 
-    public function adminmanagement() {
-        $user = User::with(['payment'])->get();
-
-        return view('admin.user.admin_management',[
-            'admin' => $user->where('role', 1),
-            'user' => $user->where('role', 0)
-        ]);
-    }
+   
 
     public function newUser(Request $request) {
         $validated = $request->validate([

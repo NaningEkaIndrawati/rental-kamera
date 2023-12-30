@@ -37,7 +37,7 @@ Route::get('/reset/{token}',[ForgetPasswordController::class,'resetPasswordIndex
 Route::post('/reset',[ForgetPasswordController::class,'resetPassword'])->name('resetpassword');
 
 Route::middleware(['auth','superuser'])->group(function () {
-    Route::get('/admin/admin-management',[AdminController::class, 'adminmanagement'])->name('superuser.admin');
+    
 
     // Alat
     Route::get('/admin/alat/{id?}',[AlatController::class, 'index'])->name('alat.index');
