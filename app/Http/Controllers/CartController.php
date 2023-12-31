@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function store(Request $request, $id, $userId) {
+    public function store(Request $request, $id, $penyewaId) {
         $cart = new Carts();
         $alat = Alat::find($id);
 
@@ -22,7 +22,7 @@ class CartController extends Controller
             $harga = $alat->harga6;
         }
 
-        $cart->user_id = $userId;
+        $cart->penyewa_id = $penyewaId;
         $cart->alat_id = $alat->id;
         $cart->harga = $harga;
         $cart->durasi = $request['btn'];

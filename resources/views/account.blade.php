@@ -59,10 +59,8 @@
                         </div>
                         <button type="submit" class="btn btn-success w-100 mt-4">Ganti Password</button>
                     </form>
-                    @if (Auth::user()->role != 0)
+                    @if (Auth::user()->role == 1)
                     <a class="btn btn-danger w-100 mt-2" href="{{ route('admin.index') }}">Kembali</a>
-                    @else
-                    <a class="btn btn-danger w-100 mt-2" href="{{ route('member.index') }}">Kembali</a>
                     @endif
                 </div>
             </div>

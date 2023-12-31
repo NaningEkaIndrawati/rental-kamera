@@ -8,13 +8,15 @@ use App\Models\Payment;
 class RentController extends Controller
 {
     public function index() {
+        $data = Payment::with(['penyewa','order'])->where('status', 1)->orderBy('id','DESC')->get();
+        // dd($data);
         return view('admin.penyewaan.penyewaan',[
-            'penyewaan' => Payment::with(['user','order'])->where('status', '!=', 4)->orderBy('id','DESC')->get(),
+            'penyewaan' => $data,
         ]);
     }
 
     public function detail($id) {
-        $detail = Order::with(['user','payment','alat'])->where('payment_id', $id)->get();
+        $detail = Order::with(['penyewa','payment','alat'])->where('payment_id', $id)->get();
         $payment = Payment::find($id);
 
         return view('admin.penyewaan.detail',[
@@ -33,8 +35,10 @@ class RentController extends Controller
     }
 
     public function riwayat() {
+        $data = Payment::with(['penyewa','order'])->where('status', 2)->orderBy('id','DESC')->get();
+        // dd($data);
         return view('admin.penyewaan.riwayat',[
-            'penyewaan' => Payment::where('status', 4)->get()
+            'penyewaan' => $data
         ]);
     }
 }

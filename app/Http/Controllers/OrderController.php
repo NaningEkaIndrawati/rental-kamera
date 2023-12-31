@@ -121,7 +121,7 @@ class OrderController extends Controller
 
     public function alatkembali($id) {
         Payment::find($id)->update([
-            'status' => 4
+            'status' => 2
         ]);
 
         return back();

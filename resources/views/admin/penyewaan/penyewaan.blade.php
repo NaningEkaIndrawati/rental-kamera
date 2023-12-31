@@ -10,27 +10,24 @@
                             <tr>
                                 <th>No. Invoice</th>
                                 <th>Tanggal Reservasi</th>
-                                <th>User</th>
+                                <th>Penyewa</th>
                                 <th>Total</th>
                                 <th>Detail</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($penyewaan as $item)
+                            {{-- <p>{{$item->order->first->status->status}}</p> --}}
                                 <tr>
                                     <td> {{ $item->no_invoice }}
-                                        @if ($item->status == 1)
-                                            <span class="badge bg-warning">Perlu Ditinjau</span>
-                                        @elseif ($item->status == 2)
-                                            <span class="badge bg-info">Belum Bayar</span>
-                                        @elseif ($item->status == 3)
-                                            <span class="badge bg-success">Sudah Bayar</span>
-                                        @elseif ($item->status == 4)
-                                            <span class="badge bg-secondary">Selesai</span>
+                                        @if ($item->order->first->status->status == 1)
+                                            <span class="badge bg-warning">Sedang Disewa</span>
+                                        @elseif ($item->order->first->status->status == 2)
+                                            <span class="badge bg-info">Selesai Disewa</span>
                                         @endif
                                     </td>
                                     <td>{{ date('D, d M Y H:i', strtotime($item->created_at)) }}</td>
-                                    <td><b>{{ $item->user->name }}</b> ({{ $item->user->email }})</td>
+                                    <td><b>{{ $item->penyewa->nama }}</b> ({{ $item->penyewa->telepon }})</td>
                                     <td>@money($item->total) &nbsp; <span class="badge bg-secondary">{{ $item->order->count() }} Alat</span></td>
                                     <td>
                                         <a href="{{ route('penyewaan.detail',['id' => $item->id]) }}" class="btn btn-outline-primary position-relative">

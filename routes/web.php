@@ -73,18 +73,17 @@ Route::middleware(['auth','admin'])->group(function () {
     // Penyewa atau User
     Route::get('/admin/usermanagement',[AdminController::class,'usermanagement'])->name('admin.user');
     Route::post('/admin/usermanagement/new',[AdminController::class,'newUser'])->name('user.new');
-    Route::patch('admin/user/promote/{id}',[UserController::class,'promote'])->name('user.promote');
-    Route::patch('admin/user/demote/{id}',[UserController::class,'demote'])->name('user.demote');
+    Route::get('/admin/usermanagement/{id}',[AdminController::class,'detailUser'])->name('admin.penyewa.detail');
 });
 
 Route::middleware('auth')->group(function() {
-    Route::get('/memberarea',[MemberController::class,'index'])->name('member.index');
-    Route::get('/memberarea/kalender', function() {
-        return view('member.kalender');
-    })->name('member.kalender');
+    // Route::get('/memberarea',[MemberController::class,'index'])->name('member.index');
+    // Route::get('/memberarea/kalender', function() {
+    //     return view('member.kalender');
+    // })->name('member.kalender');
 
-    // Carts
-    Route::post('/memberarea/store/{id}/{userId}',[CartController::class,'store'])->name('cart.store');
+    // // Carts
+    Route::post('/memberarea/store/{id}/{penyewaId}',[CartController::class,'store'])->name('cart.store');
     Route::delete('/memberarea/delete/{id}',[CartController::class,'destroy'])->name('cart.destroy');
 
     // Orders
