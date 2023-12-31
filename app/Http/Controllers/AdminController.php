@@ -39,6 +39,12 @@ class AdminController extends Controller
             'penyewa' => $user->where('role', 0)
         ]);
     }
+    public function detailUser($id){
+        $user = Penyewa::findOrFail($id);
+        return view('admin.user.detail',[
+            'penyewa'=>$user
+        ]);
+    }
 
    
 
@@ -76,12 +82,12 @@ class AdminController extends Controller
 
 
     public function newOrderIndex($penyewaId) {
-        $user = Penyewa::find($penyewaId);
+        $penyewa = Penyewa::find($penyewaId);
         $alat = Alat::with(['category'])->get();
         $cart = Carts::with(['penyewa'])->where('penyewa_id', $penyewaId)->get();
 
         return view('admin.penyewaan.reservasibaru',[
-            'user' => $user,
+            'penyewa' => $penyewa,
             'alat' => $alat,
             'cart' => $cart,
             'total' => $cart->sum('harga')
@@ -89,25 +95,25 @@ class AdminController extends Controller
     }
 
     public function createNewOrder(Request $request, $penyewaId) {
-        $cart = Carts::where('payment_id', $penyewaId)->get();
+        $cart = Carts::where('penyewa_id', $penyewaId)->get();
         $pembayaran = new Payment();
 
         $pembayaran->no_invoice = $penyewaId."/".Carbon::now()->timestamp;
-        $pembayaran->user_id = $penyewaId;
-        $pembayaran->status = 3;
+        $pembayaran->penyewa_id = $penyewaId;
+        $pembayaran->status = 1;
         $pembayaran->total = $cart->sum('harga');
         $pembayaran->save();
 
         foreach($cart as $c) {
             Order::create([
                 'alat_id' => $c->alat_id,
-                'user_id' => $c->user_id,
-                'payment_id' => Payment::where('user_id',$penyewaId)->orderBy('id','desc')->first()->id,
+                'penyewa_id' => $c->penyewa_id,
+                'payment_id' => Payment::where('penyewa_id',$penyewaId)->orderBy('id','desc')->first()->id,
                 'durasi' => $c->durasi,
                 'starts' => date('Y-m-d H:i', strtotime($request['start_date'].$request['start_time'])),
                 'ends' => date('Y-m-d H:i', strtotime($request['start_date'].$request['start_time']."+".$c->durasi." hours")),
                 'harga' => $c->harga,
-                'status' => 2
+                'status' => 1
             ]);
             $c->delete();
         }

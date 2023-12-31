@@ -9,23 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function promote($id) {
-        $user = User::find($id);
-        $user->update([
-            'role' => 1,
-        ]);
-
-        return back();
-    }
-
-    public function demote($id) {
-        $user = User::find($id);
-        $user->update([
-            'role' => 0,
-        ]);
-
-        return back();
-    }
+ 
 
     public function edit() {
         return view('account',[

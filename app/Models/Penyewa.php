@@ -19,4 +19,13 @@ class Penyewa extends Model
     public function payment() {
         return $this->hasMany(Payment::class,'penyewa_id','id');
     }
+    public function cart() {
+        return $this->hasMany(Carts::class, 'penyewa_id', 'id');
+    }
+
+    public function reservasi() {
+        return $this->hasMany(Order::class, 'penyewa_id', 'id');
+    }
+
+   
 }

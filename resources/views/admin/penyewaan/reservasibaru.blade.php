@@ -16,7 +16,8 @@
         <div class="row mt-4"><div class="col-12"><a href="{{ route('admin.user') }}" class="btn btn-primary">Kembali</a></div></div>
         <div class="row mb-4 mt-2">
             <div class="col-12">
-                <h4>Buat Reservasi untuk <b>{{ $user->name }}</b></h4>
+
+                <h4>Buat Reservasi untuk <b>{{ $penyewa->nama }}</b></h4>
             </div>
         </div>
         <div class="row">
@@ -35,7 +36,7 @@
                                         <small>{{ $item->deskripsi }}</small>
                                     </div>
                                     <div class="card-footer">
-                                        <form action="{{ route('cart.store',['id' => $item->id, 'userId' => $user->id]) }}" method="POST">
+                                        <form action="{{ route('cart.store',['id' => $item->id, 'penyewaId' => $penyewa->id]) }}" method="POST">
                                             @csrf
                                             <div class="d-block">
                                                 <button type="submit" class="btn btn-success w-100 mt-2" name="btn" value="24"><i class="fas fa-shopping-cart"></i> @money($item->harga24) <b>24jam</b></button>
@@ -84,7 +85,7 @@
                             <b>@money($total)</b>
                         </div>
                         <small>Tanggal Ambil</small>
-                        <form action="{{ route('admin.createorder',['userId' => $user->id]) }}" method="POST">
+                        <form action="{{ route('admin.createorder',['penyewaId' => $penyewa->id]) }}" method="POST">
                             @csrf
                             <div class="d-flex w-100 justify-content-center mb-4">
                                 <input type="date" name="start_date" class="forn-control" required>

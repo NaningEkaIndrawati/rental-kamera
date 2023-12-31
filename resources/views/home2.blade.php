@@ -20,7 +20,7 @@
         <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
             <div class="col-md-5 p-lg-5 mx-auto my-3">
                 <h1 class="display-4 fw-normal">Rumah Rental Kamera</h1>
-                <p class="fw-normal">Cek Ketersediaan - Reservasi - Bayar - Ambil - Jangan lupa balikin</p>
+                <p class="fw-normal">Cek Ketersediaan & Reservasi</p>
                 @if (!Auth::check())
                 <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
                 @endif
@@ -48,10 +48,6 @@
             @endif
             @if (Auth::check() && Auth::user()->role == 0)
                 <div class="alert alert-warning" role="alert">
-                    Anda telah login sebagai <b>{{ Auth::user()->name }}</b>&nbsp; <a class="btn btn-success" href="{{ route('member.index') }}">Mulai Menyewa</a>
-                </div>
-            @elseif (Auth::check() && Auth::user()->role != 0)
-                <div class="alert alert-warning" role="alert">
                     Anda telah login sebagai Admin(<b>{{ Auth::user()->name }}</b>)&nbsp; <a class="btn btn-success" href="{{ route('admin.index') }}">Halaman Admin</a>
                 </div>
             @endif
@@ -60,7 +56,7 @@
                 @if (request()->get('search') == null)
                 <div class="d-flex w-100 justify-content-start mb-4 mt-2" style="overflow: auto">
                     <div class="btn-group" role="group">
-                        <a class="btn {{ (request('kategori') == null) ? 'btn-secondary' : 'btn-outline-secondary' }}" href="{{ route('member.index') }}">Semua</a>
+                        <a class="btn {{ (request('kategori') == null) ? 'btn-secondary' : 'btn-outline-secondary' }}" href="{{ route('admin.index') }}">Semua</a>
                         @foreach ($categories as $cat)
                             <a class="btn {{ (request('kategori') == $cat->id) ? 'btn-secondary' : 'btn-outline-secondary' }}" href="?kategori={{ $cat->id }}">{{ $cat->nama_kategori }}</a>
                         @endforeach

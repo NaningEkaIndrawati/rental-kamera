@@ -17,17 +17,17 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'name' => 'Yoga Indra',
-                'email' => 'yogaiw@test.com',
-                'password' => Hash::make('yogaiw'),
-                'role' => 2
-            ],
-            [
-                'name' => 'Mufid',
-                'email' => 'mufid@test.com',
-                'password' => Hash::make('akhmadmufid'),
+                'name' => 'admin',
+                'email' => 'admin@test.com',
+                'password' => Hash::make('admin'),
                 'role' => 1
             ],
+            // [
+            //     'name' => 'superadmin',
+            //     'email' => 'superadmin@test.com',
+            //     'password' => Hash::make('superadmin'),
+            //     'role' => 1
+            // ],
             [
                 'name' => 'Hanna Hunafa',
                 'email' => 'hannan@test.com',

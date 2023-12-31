@@ -24,8 +24,6 @@
                         <div class="card-header">
                             @if (Auth::guest())
                                 <i class="fas fa-arrow-left"></i> <a href="{{ route('home') }}" class="link-dark">Kembali</a>
-                            @elseif (Auth::user()->role == 0)
-                                <i class="fas fa-arrow-left"></i> <a href="{{ route('member.index') }}" class="link-dark">Kembali</a>
                             @elseif (Auth::user()->role != 0)
                                 <i class="fas fa-arrow-left"></i> <a href="{{ url()->previous() }}" class="link-dark">Kembali</a>
                             @endif

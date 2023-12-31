@@ -18,7 +18,6 @@ class CreatePaymentsTable extends Migration
             $table->string('no_invoice');
             $table->foreignId('penyewa_id')->references('id')->on('penyewas')->onDelete('cascade');
             $table->integer('total');
-            $table->string('bukti')->nullable();
             $table->integer('status')->default(1);
             $table->timestamps();
         });

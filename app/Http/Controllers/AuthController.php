@@ -22,8 +22,6 @@ class AuthController extends Controller
 
             if(Auth::user()->role != 0) {
                 return redirect(route('admin.index'));
-            } else {
-                return redirect(route('member.index'));
             }
         }
         return back()->with('error', 'Login gagal: tidak ada user terdaftar pada sistem');
