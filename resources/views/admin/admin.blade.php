@@ -72,7 +72,7 @@
                                 @foreach ($top_user as $user)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td class="d-flex justify-content-between">{{ $user->name }} <span class="badge bg-secondary">{{ $user->payment_count }} Transaksi</span></td>
+                                    <td class="d-flex justify-content-between">{{ $user->nama }} <span class="badge bg-secondary">{{ $user->payment_count }} Transaksi</span></td>
                                     <td>{{ $user->telepon }}</td>
                                 </tr>
                                 @endforeach

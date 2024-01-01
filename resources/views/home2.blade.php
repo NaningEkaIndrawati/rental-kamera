@@ -24,6 +24,9 @@
                 @if (!Auth::check())
                 <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
                 @endif
+                @if (Auth::check())
+                    <a href="{{route('admin.index')}}">Kembali Ke Dashboard</a>
+                @endif
             </div>
         </div>
         <div class="container">

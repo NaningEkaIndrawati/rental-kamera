@@ -11,6 +11,7 @@ use App\Models\Payment;
 use App\Models\Penyewa;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\HistoryPenyewa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -120,4 +121,5 @@ class AdminController extends Controller
 
         return redirect(route('penyewaan.index'));
     }
+
 }
