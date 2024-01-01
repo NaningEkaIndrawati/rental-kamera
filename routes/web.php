@@ -74,6 +74,7 @@ Route::middleware(['auth','admin'])->group(function () {
     Route::get('/admin/usermanagement',[AdminController::class,'usermanagement'])->name('admin.user');
     Route::post('/admin/usermanagement/new',[AdminController::class,'newUser'])->name('user.new');
     Route::get('/admin/usermanagement/{id}',[AdminController::class,'detailUser'])->name('admin.penyewa.detail');
+    
 });
 
 Route::middleware('auth')->group(function() {
@@ -96,6 +97,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/akun/pengaturan',[UserController::class,'edit'])->name('akun.pengaturan');
     Route::patch('/akun/pengaturan',[UserController::class,'update'])->name('akun.update');
     Route::patch('/changepass',[UserController::class,'changePassword'])->name('changepassword');
+ 
 });
 
 Route::get('/logout',[AuthController::class, 'logout'])->name('logout');

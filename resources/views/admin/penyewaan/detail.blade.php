@@ -75,18 +75,13 @@
                                                 class="link">{{ $item->alat->nama_alat }}</a>
                                             <span class="badge bg-warning">{{ $item->alat->category->nama_kategori }}</span>
                                             <span class="badge bg-secondary">{{ $item->durasi }} Jam</span>
-                                            @if ($item->status === 3)
-                                                <span class="badge bg-danger">Ditolak</span>
-                                            @elseif ($item->status === 2)
-                                                <span class="badge bg-success">ACC</span>
-                                            @endif
                                         </td>
                                         <td>{{ date('d M Y H:i', strtotime($item->ends)) }}</td>
                                         <td style="text-align: right"><b>@money($item->harga)</b></td>
                                     </tr>
                                 @endforeach
                                 <tr>
-
+                                    <td></td>
                                     <td></td>
                                     <td style="text-align: right"><b>Total</b></td>
                                     <td style="text-align: right"><b>@money($total)</b></td>

@@ -26,7 +26,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ date('D, d M Y', strtotime($item->tanggal)) }}</td>
                         <td>{{ $item->nama_alat }}</td>
-                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->nama }}</td>
                         <td style="text-align: right"><b>@money($item->harga)</b></td>
                     </tr>
                     @endforeach

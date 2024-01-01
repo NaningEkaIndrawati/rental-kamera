@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\OrderAccepted;
-use App\Mail\OrderPaid;
+use Carbon\Carbon;
 use App\Models\Carts;
 use App\Models\Order;
+use App\Mail\OrderPaid;
 use App\Models\Payment;
-use Carbon\Carbon;
+use App\Models\Penyewa;
+use App\Mail\OrderAccepted;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\HistoryPenyewa;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
@@ -120,25 +122,46 @@ class OrderController extends Controller
     }
 
     public function alatkembali($id) {
-        Payment::find($id)->update([
-            'status' => 2
-        ]);
+        // ketika reservasi diklik selesai/dikembalikan
+        // Find the payment with the specified ID
+        $payment = Payment::find($id);
 
-        return back();
+        if ($payment) {
+            // Update the status of the payment
+            $payment->update(['status' => 2]);
+    
+            // Find all orders with the specified payment_id
+            $orders = Order::where('payment_id', $id)->get();
+            
+    
+            // Loop through each order and update its status
+            foreach ($orders as $order) {
+                $order->update(['status' => 2]);
+            }
+
+    
+            return back();
+        }
+    
+        // Handle the case where the Payment with the given ID doesn't exist.
+        // You can redirect or show an error message here.
     }
 
     public function cetak() {
-        $dari = request('dari');
-        $sampai = request('sampai');
+        $dari = Carbon::parse(request('dari'))->startOfDay();
+        $sampai = Carbon::parse(request('sampai'))->endOfDay();
+        
+        // dd($dari);
         $laporan = DB::table('orders')
             ->join('payments','payments.id','orders.payment_id')
             ->join('alats','alats.id','orders.alat_id')
-            ->join('users','users.id','orders.user_id')
+            ->join('penyewas','penyewas.id','orders.penyewa_id')
             ->whereBetween('orders.created_at',[$dari, $sampai])
             ->where('orders.status',2)
-            ->where('payments.status','>',2)
+            ->where('payments.status',2)
             ->get(['*','orders.created_at AS tanggal']);
-
+        
+        // dd($laporan);
         return view('admin.laporan',[
             'laporan' => $laporan,
             'total' => $laporan->sum('harga')
