@@ -10,6 +10,5 @@
     </div>
     <div class="d-flex">
         <button type="submit" class="btn btn-primary">Login</button>
-        <a class="btn btn-link link-dark" href="{{ route('forgetpassword.index') }}">Lupa Password</a>
     </div>
 </form>

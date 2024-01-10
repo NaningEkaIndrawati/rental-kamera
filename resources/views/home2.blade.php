@@ -103,7 +103,7 @@
         </div>
 
         <footer class="py-5 bg-dark">
-            <div class="container px-4"><p class="m-0 text-center text-white">&copy; 2022 Rumah Rental Kamera</p></div>
+            <div class="container px-4"><p class="m-0 text-center text-white">&copy; 2024 Rumah Rental Kamera</p></div>
         </footer>
 
         <!-- Modal -->

@@ -41,6 +41,11 @@ return [
             'provider' => 'users',
         ],
 
+        'penyewa' => [
+            'driver' => 'session',
+            'provider' => 'penyewa',
+        ],
+
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -69,6 +74,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'penyewa' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Penyewa::class,
         ],
 
         // 'users' => [

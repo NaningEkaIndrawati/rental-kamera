@@ -57,7 +57,7 @@
                                         <form action="{{ route('kategori.destroy',['id'=>$cat->id]) }}" method="POST" style="display: inline-block">
                                             @method('DELETE')
                                             @csrf
-                                            <button type="submit" class="btn btn-sm btn-danger" onclick="javascript: return confirm('Anda yakin akan menghapus alat ini?');"><i class="fas fa-trash"></i></a>
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="javascript: return confirm('Anda yakin akan menghapus kategori ini?');"><i class="fas fa-trash"></i></a>
                                         </form>
                                     </td>
                                 </tr>

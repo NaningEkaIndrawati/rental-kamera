@@ -30,16 +30,13 @@ Route::post('/login',[AuthController::class, 'authenticate']);
 Route::get('/daftar',[RegisterController::class,'index'])->name('daftar');
 Route::post('/daftar',[RegisterController::class,'store'])->name('register.store');
 
-Route::get('/forget-password',[ForgetPasswordController::class,'index'])->name('forgetpassword.index');
-Route::post('/forget-password',[ForgetPasswordController::class,'sendResetLink'])->name('forgetpassword.sendlink');
-
 Route::get('/reset/{token}',[ForgetPasswordController::class,'resetPasswordIndex']);
 Route::post('/reset',[ForgetPasswordController::class,'resetPassword'])->name('resetpassword');
 
-Route::middleware(['auth','superuser'])->group(function () {
-    
 
-    // Alat
+Route::middleware(['auth','admin'])->group(function () {
+    Route::get('/admin', [AdminController::class,'index'])->name('admin.index');
+
     Route::get('/admin/alat/{id?}',[AlatController::class, 'index'])->name('alat.index');
     Route::get('/admin/alat/{id}/detail',[AlatController::class,'edit'])->name('alat.edit');
     Route::patch('/admin/alat/{id}/detail',[AlatController::class,'update'])->name('alat.update');
@@ -52,10 +49,6 @@ Route::middleware(['auth','superuser'])->group(function () {
     Route::get('/admin/kategori/{id}/edit',[CategoryController::class,'edit'])->name('kategori.edit');
     Route::patch('/admin/kategori/{id}',[CategoryController::class,'update'])->name('kategori.update');
     Route::delete('/admin/kategori/{id}',[CategoryController::class,'destroy'])->name('kategori.destroy');
-});
-
-Route::middleware(['auth','admin'])->group(function () {
-    Route::get('/admin', [AdminController::class,'index'])->name('admin.index');
 
     //Penyewaan
     Route::get('/admin/penyewaan',[RentController::class, 'index'])->name('penyewaan.index');

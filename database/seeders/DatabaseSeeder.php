@@ -19,21 +19,10 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'admin',
                 'email' => 'admin@test.com',
+                'telepon' => '081336059335',
                 'password' => Hash::make('admin'),
                 'role' => 1
             ],
-            // [
-            //     'name' => 'superadmin',
-            //     'email' => 'superadmin@test.com',
-            //     'password' => Hash::make('superadmin'),
-            //     'role' => 1
-            // ],
-            [
-                'name' => 'Hanna Hunafa',
-                'email' => 'hannan@test.com',
-                'password' => Hash::make('hhphoto'),
-                'role' => 0
-            ]
         ]);
 
         DB::table('categories')->insert([

@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\AlatApiController;
+use App\Http\Controllers\Api\AuthApiController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\RegisterController;
+use App\Http\Controllers\Api\ReservasiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
@@ -16,19 +20,26 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
+Route::post('/login', [AuthApiController::class,'authenticate']);
+Route::post('/register', [AuthApiController::class,'register']);
+
+Route::post('/reservasi', [ReservasiController::class,'index']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/logout', [AuthApiController::class, 'logout']);
+});
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('v1')->group(function () {
-    Route::prefix('/alat')->group(function () {
+
+Route::prefix('/alat')->group(function () {
         Route::get('/', [AlatApiController::class, 'showAllAlat']);
         Route::get('/{id}',[AlatApiController::class, 'detail']);
-    });
+});
 
-    Route::prefix('/category')->group(function () {
-        Route::get('/', [AlatApiController::class, 'showAllCategory']);
-    });
+Route::prefix('/category')->group(function () {
+        Route::get('/', [CategoryController::class, 'index']);
 });
 
 Route::get('/kalender-alat', function() {
@@ -52,3 +63,6 @@ Route::get('/kalender-alat/{id}', function($id) {
 
     return json_encode($order);
 });
+
+Route::post('/register', [RegisterController::class, 'store']);
+
