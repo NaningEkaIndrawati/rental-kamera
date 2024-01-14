@@ -16,4 +16,13 @@ class Alat extends Model
     public function order() {
         return $this->hasMany(Order::class,'alat_id','id');
     }
+    public function dataKamera() {
+        return $this->hasOne(DataKamera::class, 'datakamera_id', 'id');
+    }
+
+    // Relationship method for DataLensa
+    public function dataLensa() {
+        return $this->hasOne(DataLensa::class, 'datalensa_id', 'id');
+    }
+    
 }

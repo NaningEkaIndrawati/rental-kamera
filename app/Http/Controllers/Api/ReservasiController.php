@@ -17,21 +17,32 @@ class ReservasiController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|max:255', 
-            'no telephone' => 'required|min:12|max:255', 
-            'tanggal_pengambilan' => 'required', 
-            'nama alat' => 'required',
-            'harga' => 'required', 
-            'tanggal reservasi' => 'required',
-        ]);
-        
+        // $validated =
 
-        $validated['name'] = Hash::make($validated['name']);
-        $user = User::create($validated);
 
-        return response()->json([
-            'message' => 'Reservasi Berhasil, Silakan cek direservasi anda',
-        ]);
+        // $cart = Carts::where('user_id', Auth::id())->get();
+        // $pembayaran = new Payment();
+
+        // $pembayaran->no_invoice = Auth::id()."/".Carbon::now()->timestamp;
+        // $pembayaran->user_id = Auth::id();
+        // $pembayaran->total = $cart->sum('harga');
+        // $pembayaran->save();
+
+        // foreach($cart as $c) {
+        //     Order::create([
+        //         'alat_id' => $c->alat_id,
+        //         'user_id' => $c->user_id,
+        //         'payment_id' => Payment::where('user_id',Auth::id())->orderBy('id','desc')->first()->id,
+        //         'durasi' => $c->durasi,
+        //         'starts' => date('Y-m-d H:i', strtotime($request['start_date'].$request['start_time'])),
+        //         'ends' => date('Y-m-d H:i', strtotime($request['start_date'].$request['start_time']."+".$c->durasi." hours")),
+        //         'harga' => $c->harga,
+        //     ]);
+        //     $c->delete();
+        // }
+
+        // return response()->json([
+        //     'message' => 'Reservasi Berhasil, Silakan cek direservasi anda',
+        // ]);
     }
 }

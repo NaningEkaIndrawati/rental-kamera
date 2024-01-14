@@ -1,10 +1,15 @@
 <?php
 
+use App\Http\Controllers\Api\AccessoriesController;
 use App\Http\Controllers\Api\AlatApiController;
 use App\Http\Controllers\Api\AuthApiController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\DatakameraController;
+use App\Http\Controllers\Api\DatalensaController;
+use App\Http\Controllers\Api\PaketController;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\ReservasiController;
+use App\Models\DataKamera;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +28,7 @@ use Illuminate\Support\Facades\DB;
 Route::post('/login', [AuthApiController::class,'authenticate']);
 Route::post('/register', [AuthApiController::class,'register']);
 
-Route::post('/reservasi', [ReservasiController::class,'index']);
+Route::post('/reservasi', [ReservasiController::class,'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/logout', [AuthApiController::class, 'logout']);
@@ -32,6 +37,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/kamera', [DatakameraController::class, 'index']);
+Route::get('/lensa', [DatalensaController::class, 'index']);
+Route::get('/accessories', [AccessoriesController::class, 'index']);
+Route::get('/paket', [PaketController::class, 'index']);
 
 Route::prefix('/alat')->group(function () {
         Route::get('/', [AlatApiController::class, 'showAllAlat']);

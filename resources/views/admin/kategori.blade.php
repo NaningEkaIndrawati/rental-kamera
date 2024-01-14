@@ -17,23 +17,6 @@
                 <div class="card shadow mb-4">
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
-                        Tambah Kategori
-                    </div>
-                    <div class="card-body">
-                        <form action="{{ route('kategori.store') }}" method="POST">
-                            @csrf
-                            <div class="form-group mb-3">
-                                <input type="text" name="nama" class="form-control" placeholder="Nama Kategori Baru" required>
-                            </div>
-                            <button type="submit" name="tambah" class="btn btn-primary d-flex fa-pull-right">Tambah</button></a>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="card shadow mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-table me-1"></i>
                         Kategori
                     </div>
                     <div class="card-body">

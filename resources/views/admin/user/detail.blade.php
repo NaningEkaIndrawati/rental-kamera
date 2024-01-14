@@ -15,7 +15,8 @@
                     <hr>
 
                     <h5>Dokumen Jaminan</h5>
-                    <img src="{{ asset($penyewa->ktp) }}" alt="Dokumen Jaminan" class="img-fluid">
+                    <img src="{{ asset('storage/' . $penyewa->ktp) }}" alt="Dokumen Jaminan" class="img-fluid">
+
 
                 </div>
             </div>

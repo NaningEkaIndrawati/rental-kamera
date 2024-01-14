@@ -44,6 +44,7 @@ class AlatController extends Controller
         $this->validate($request,[
             'nama' => 'required',
             'kategori' => 'required',
+            'deskripsi' => 'required',
             'harga24' => 'required|numeric',
             'harga12' => 'required|numeric',
             'harga6' => 'required|numeric',
@@ -74,6 +75,7 @@ class AlatController extends Controller
         $this->validate($request,[
             'nama' => 'required',
             'kategori' => 'required',
+            'deskripsi' => 'required',
             'harga24' => 'required|numeric',
             'harga12' => 'required|numeric',
             'harga6' => 'required|numeric',
