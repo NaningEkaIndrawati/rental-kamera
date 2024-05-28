@@ -6,9 +6,11 @@ use App\Http\Controllers\Api\AuthApiController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\DatakameraController;
 use App\Http\Controllers\Api\DatalensaController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PaketController;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\ReservasiController;
+use App\Http\Controllers\Api\RiwayatReservasiController;
 use App\Models\DataKamera;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,13 +28,13 @@ use Illuminate\Support\Facades\DB;
 */
 
 Route::post('/login', [AuthApiController::class,'authenticate']);
-Route::post('/register', [AuthApiController::class,'register']);
-
-Route::post('/reservasi', [ReservasiController::class,'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/reservasi', [OrderController::class,'store']);
+    Route::get('/riwayat', [RiwayatReservasiController::class, 'index']);
     Route::get('/logout', [AuthApiController::class, 'logout']);
 });
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

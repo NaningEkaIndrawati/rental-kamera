@@ -17,6 +17,7 @@ class CreateAlatsTable extends Migration
             $table->id();
             $table->foreignId('kategori_id')->references('id')->on('categories')->onDelete('cascade');
             $table->string('nama_alat');
+            $table->enum('status',['tersedia','habis']);
             $table->text('deskripsi')->nullable();
             $table->integer('harga24');
             $table->integer('harga12');

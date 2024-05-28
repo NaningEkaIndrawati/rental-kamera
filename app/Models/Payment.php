@@ -18,4 +18,8 @@ class Payment extends Model
     public function order() {
         return $this->hasMany(Order::class, 'payment_id', 'id');
     }
+
+    public function orderApi() {
+        return $this->hasOne(Order::class, 'payment_id', 'id');
+    }
 }

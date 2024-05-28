@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Payment;
+use GuzzleHttp\Client;
 
 class RentController extends Controller
 {
@@ -27,7 +28,23 @@ class RentController extends Controller
     }
 
     public function destroy($id) {
-        $payment = Payment::find($id);
+
+    $payment = Payment::find($id);
+
+    $noUser = $payment->penyewa->telepon;
+
+    $client = new Client();
+
+    $response = $client->request('POST', 'https://api.fonnte.com/send', [
+    'form_params' => [
+        'target' => $noUser,
+        'message' => 'Reservasi Anda Dibatalkan hehe',
+        'countryCode' => '62', //optional
+    ],
+    'headers' => [
+        'Authorization' => 'vGSwXaF8K#TSBieycJGj',
+    ],
+        ]);
 
         $payment->delete();
 
