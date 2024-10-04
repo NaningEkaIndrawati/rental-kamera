@@ -24,6 +24,8 @@ class RentController extends Controller
             'detail' => $detail,
             'total' => $payment->total,
             'status' => $payment->status,
+            'metode_pembayaran' => $payment->metode_pembayaran,
+            'payment' => $payment
         ]);
     }
 

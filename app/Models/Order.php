@@ -22,4 +22,7 @@ class Order extends Model
     public function payment() {
         return $this->belongsTo(Payment::class,'payment_id');
     }
+    public function notifikasi() {
+        return $this->hasMany(Notifications::class, 'order_id', 'id');
+    }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthApiController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\DatakameraController;
 use App\Http\Controllers\Api\DatalensaController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PaketController;
 use App\Http\Controllers\Api\RegisterController;
@@ -28,6 +29,11 @@ use Illuminate\Support\Facades\DB;
 */
 
 Route::post('/login', [AuthApiController::class,'authenticate']);
+Route::post('/send-notification-to-all',[NotificationController::class,'sendNotificationToAllUser']);
+Route::post('/send-notification-to-user/{id}',[NotificationController::class,'sendNotificatonToSpesificUser']);
+Route::post('/send-notification-to-user-schadule/{id}',[NotificationController::class,'sendNotificatonToSpesificUserWithSchadule']);
+Route::delete('/delete-notification/{notification_id}',[NotificationController::class,'deleteNotification']);
+
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/reservasi', [OrderController::class,'store']);
