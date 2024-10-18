@@ -75,13 +75,11 @@ class AlatController extends Controller
         $this->validate($request,[
             'nama' => 'required',
             'kategori' => 'required',
-            'deskripsi' => 'required',
             'harga24' => 'required|numeric',
             'harga12' => 'required|numeric',
             'harga6' => 'required|numeric',
-            'gambar' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048'
+            'gambar' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
-
         $alat = Alat::find($id);
         $alat->nama_alat = $request['nama'];
         $alat->deskripsi = $request['deskripsi'];
@@ -89,6 +87,7 @@ class AlatController extends Controller
         $alat->harga24 = $request['harga24'];
         $alat->harga12 = $request['harga12'];
         $alat->harga6 = $request['harga6'];
+        $alat->status = $request['status'];
 
         if($request->hasFile('gambar')) {
             $gambar = $request->file('gambar');

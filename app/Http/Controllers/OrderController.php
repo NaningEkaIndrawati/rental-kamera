@@ -11,6 +11,9 @@ use App\Models\Penyewa;
 use App\Mail\OrderAccepted;
 use Illuminate\Http\Request;
 use App\Models\HistoryPenyewa;
+use App\Models\Notifications;
+use GuzzleHttp\Client;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -120,37 +123,46 @@ class OrderController extends Controller
         Mail::to($payment->user->email)->send(new OrderPaid($payment));
         return back();
     }
-
+    //ini ketika alat sudah dikembalikan
     public function alatkembali($id) {
-        // ketika reservasi diklik selesai/dikembalikan
+        // Ketika reservasi diklik selesai/dikembalikan
         // Find the payment with the specified ID
         $payment = Payment::find($id);
 
         if ($payment) {
             // Update the status of the payment
             $payment->update(['status' => 2]);
-    
+
             // Find all orders with the specified payment_id
             $orders = Order::where('payment_id', $id)->get();
-            
-    
-            // Loop through each order and update its status
+
+            // Loop through each order, update status, and delete related notifications
             foreach ($orders as $order) {
+                // Update the status of the order
                 $order->update(['status' => 2]);
+
+                // Delete all notifications related to the order
+                $dataNotification = Notifications::where('order_id', $order->id)->get();
+                foreach($dataNotification as $notification){
+                    // dd($notification->id);
+                    $this->deleteNotification($notification->id);
+                    $notification->update(['status' => 'inactive']);
+                }
+
             }
 
-    
             return back();
         }
-    
+
         // Handle the case where the Payment with the given ID doesn't exist.
         // You can redirect or show an error message here.
     }
 
+
     public function cetak() {
         $dari = Carbon::parse(request('dari'))->startOfDay();
         $sampai = Carbon::parse(request('sampai'))->endOfDay();
-        
+
         // dd($dari);
         $laporan = DB::table('orders')
             ->join('payments','payments.id','orders.payment_id')
@@ -160,11 +172,35 @@ class OrderController extends Controller
             ->where('orders.status',2)
             ->where('payments.status',2)
             ->get(['*','orders.created_at AS tanggal']);
-        
+
         // dd($laporan);
         return view('admin.laporan',[
             'laporan' => $laporan,
             'total' => $laporan->sum('harga')
         ]);
+    }
+    public function deleteNotification($notification_id){
+        // $notificationId = '';
+        $appId = env('ONESIGNAL_APP_ID');
+        $api = "https://api.onesignal.com/api/v1/notifications/".$notification_id."?app_id=".$appId;
+        $client = new Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Basic ' . env('ONESIGNAL_REST_API_KEY') // Your REST API Key
+        ];
+
+        try {
+            $response = $client->delete($api, [
+                'headers' => $headers,
+            ]);
+
+            // Decode the response body if needed
+            $bodyResponse = json_decode($response->getBody()->getContents(), true);
+
+            return response()->json(['message' => 'Notification succes to delete', 'response' => $bodyResponse]);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to send notification', 'message' => $e->getMessage()], 500);
+        }
     }
 }

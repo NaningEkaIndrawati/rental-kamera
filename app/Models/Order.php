@@ -9,7 +9,19 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+       'penyewa_id',
+       'alat_id', 
+       'payment_id',
+       'durasi',
+       'starts',
+       'ends',
+       'harga',
+       'is_denda',
+       'jumlah_denda',
+       'tanggal_denda',
+       'status_denda',
+    ];
 
     public function penyewa() {
         return $this->belongsTo(Penyewa::class,'penyewa_id');
@@ -21,5 +33,8 @@ class Order extends Model
 
     public function payment() {
         return $this->belongsTo(Payment::class,'payment_id');
+    }
+    public function notifikasi() {
+        return $this->hasMany(Notifications::class, 'order_id', 'id');
     }
 }

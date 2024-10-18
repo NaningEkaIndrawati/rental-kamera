@@ -45,9 +45,21 @@
                                         @endif
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>Metode Pembayaran</th>
+                                    <td>
+                                        {{ $metode_pembayaran }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
-
+                    @if ($payment->bukti_upload != null)
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <img src="{{ Storage::url($payment->bukti_upload) }}" alt="bukti_upload" class="img-fluid" alt="bukti-bayar">
+                            </div>
+                        </div>
+                    @endif
                         <table class="table">
                             <thead>
                                 <tr>

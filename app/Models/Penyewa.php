@@ -29,5 +29,8 @@ use HasFactory, Notifiable,HasApiTokens;
         return $this->hasMany(Order::class, 'penyewa_id', 'id');
     }
 
-   
+    public function notifikasi() {
+        return $this->hasMany(Notifications::class, 'penyewa_id', 'id');
+    }
+
 }

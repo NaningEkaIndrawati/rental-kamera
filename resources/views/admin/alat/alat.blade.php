@@ -49,6 +49,12 @@
                                     <div class="card-body">
                                         <span class="badge bg-warning">{{ $alat->category->nama_kategori }}</span>
                                         <h6 class="card-title">{{ $alat->nama_alat }}</h6>
+                                        {{-- <div> --}}
+                                            <span @if($alat->status == 'tersedia') class="badge bg-primary" @else class="badge bg-danger" @endif>
+                                                {{ strtoupper($alat->status) }}
+                                            </span>
+                                        {{-- </div> --}}
+
                                     </div>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">@money($alat->harga24)<span class="badge bg-light text-dark" style="float: right;">24 Jam</span></li>

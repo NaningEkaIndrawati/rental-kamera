@@ -33,8 +33,12 @@
                                     <div class="card-body">
                                         <span class="badge bg-warning">{{ $item->category->nama_kategori }}</span><br>
                                         <b><a class="link-dark" href="{{ route('home.detail',['id' => $item->id]) }}">{{ $item->nama_alat }}</b></a>
+                                        <span @if($item->status == 'tersedia') class="badge bg-primary" @else class="badge bg-danger" @endif>
+                                            {{ strtoupper($item->status) }}
+                                        </span>
                                         <small>{{ $item->deskripsi }}</small>
                                     </div>
+                                    @if ($item->status == "tersedia")
                                     <div class="card-footer">
                                         <form action="{{ route('cart.store',['id' => $item->id, 'penyewaId' => $penyewa->id]) }}" method="POST">
                                             @csrf
@@ -45,6 +49,11 @@
                                             </div>
                                         </form>
                                     </div>
+                                    @else
+                                    <div>
+                                        <p class="text-center text-danger fs-2">habis</p>
+                                    </div>
+                                    @endif
                                 </div>
                             </div>
                             @endforeach

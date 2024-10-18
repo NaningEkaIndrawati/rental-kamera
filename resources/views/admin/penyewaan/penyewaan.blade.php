@@ -20,9 +20,9 @@
                             {{-- <p>{{$item->order->first->status->status}}</p> --}}
                                 <tr>
                                     <td> {{ $item->no_invoice }}
-                                        @if ($item->order->first->status->status == 1)
+                                        @if ($item->order->first->status == "1")
                                             <span class="badge bg-warning">Sedang Disewa</span>
-                                        @elseif ($item->order->first->status->status == 2)
+                                        @elseif ($item->order->first->status == "2")
                                             <span class="badge bg-info">Selesai Disewa</span>
                                         @endif
                                     </td>

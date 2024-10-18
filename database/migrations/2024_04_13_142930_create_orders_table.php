@@ -22,7 +22,11 @@ class CreateOrdersTable extends Migration
             $table->dateTime('starts');
             $table->dateTime('ends');
             $table->integer('harga');
-            $table->integer('status')->default(1);
+            //! denda
+            $table->boolean('is_denda')->default(false)->nullable();
+            $table->integer('jumlah_denda')->default(0)->nullable();
+            $table->dateTime('tanggal_denda')->nullable();
+            $table->integer('status_denda')->default(1);
             $table->timestamps();
         });
     }
