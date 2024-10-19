@@ -72,7 +72,7 @@ class OrderController extends Controller
 
         //send notifikasi peringatan 1 jam sebelum habis
         $this->sendNotifikasiSatuJamSebelumWaktuHabis((string)Auth::id(),$alat->nama_alat,$oderEnd,$order->id);
-        
+
         //send notifikasi peringatan ketika keterlambatan
         $this->sendNotifikasiKeterlambatan((string)Auth::id(),$alat->nama_alat,$oderEnd,$order->id);
 
@@ -162,7 +162,7 @@ class OrderController extends Controller
             ]);
             // ! run job update notification status
             UpdateNotificationStatus::dispatch($orderId,$notifikasiId)->delay(strtotime($datetime_satu_jam_sebelum));
-            
+
             return response()->json(['message' => 'Notification to Users'.$userid.' Created', 'response' => $bodyResponse]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to send notification', 'message' => $e->getMessage()], 500);

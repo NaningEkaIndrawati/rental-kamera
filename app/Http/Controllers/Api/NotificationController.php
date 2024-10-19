@@ -162,7 +162,7 @@ class NotificationController extends Controller
         $notifications = Notifications::where('penyewa_id', $userid)
             ->where('status', ['active'])
             ->get();
-            
+
         $data = [
             'notifications' => $notifications
         ];
