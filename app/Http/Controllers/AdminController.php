@@ -47,38 +47,46 @@ class AdminController extends Controller
         ]);
     }
 
-   
-
     public function newUser(Request $request) {
+        // Validasi input
         $validated = $request->validate([
-            'nama' => 'required',
+            'nama' => 'required|min:3|max:30|regex:/^[a-zA-Z\s]+$/', // Nama minimal 3 karakter, maksimal 30, hanya huruf dan spasi
             'alamat' => 'required',
-            'telepon' => 'required',
-            'gambar-ktp' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'telepon' => 'required|digits:12|numeric', // Harus angka dan panjang 12 digit
+            'gambar-ktp' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Gambar valid
         ]);
-        // dd($request->all());
-        if ($request->hasFile('gambar-ktp')) {
-            $file = $request->file('gambar-ktp');
-            $nama_file = time() . '_' . $file->getClientOriginalName();
-            
-            // Simpan file ke storage
-            $path = $file->storeAs('public/gambar_ktp', $nama_file);
-    
-            // Buat link ke direktori public
-            $url = Storage::url($path);
-            // dd($url);
-    
-            Penyewa::create([
-                'nama' => $request->nama,
-                'alamat' => $request->alamat,
-                'telepon' => $request->telepon,
-                'ktp' => $url, // Simpan URL file ke dalam database
-            ]);
+
+        try {
+            // Cek apakah file gambar ada
+            if ($request->hasFile('gambar-ktp')) {
+                $file = $request->file('gambar-ktp');
+                $nama_file = time() . '_' . $file->getClientOriginalName();
+
+                // Simpan file ke storage
+                $path = $file->storeAs('public/gambar_ktp', $nama_file);
+
+                // Buat link ke direktori public
+                $url = Storage::url($path);
+
+                // Simpan data ke database
+                Penyewa::create([
+                    'nama' => $request->nama,
+                    'alamat' => $request->alamat,
+                    'telepon' => $request->telepon,
+                    'ktp' => $url, // Simpan URL file ke dalam database
+                ]);
+            }
+
+            // Jika berhasil, tampilkan pesan sukses
+            $request->session()->flash('success', 'Registrasi Penyewa Berhasil');
+            return redirect()->route('admin.user');
+        } catch (\Exception $e) {
+            // Jika gagal, tampilkan pesan error
+            $request->session()->flash('error', 'Terjadi kesalahan saat menambahkan penyewa. Silakan coba lagi.');
+            return redirect()->back()->withInput(); // Kembali ke form dengan data input sebelumnya
         }
-    
-        $request->session()->flash('registrasi', 'Registrasi Penyewa Berhasil');
-        return redirect()->route('admin.user');
     }
+
 
 
 

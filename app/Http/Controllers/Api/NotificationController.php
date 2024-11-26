@@ -25,33 +25,36 @@ class NotificationController extends Controller
             'title' => 'Judul Notifikasi',
             'body' => 'notifikasi untuk semua user',
         ];
-        $api = "https://api.onesignal.com/api/v1/notifications";
+        $api = "https://api.onesignal.com/notifications";
         $client = new Client();
+        // dd(env('ONESIGNAL_APP_ID'));
         $headers = [
             'Content-Type' => 'application/json',
             'Authorization' => 'Basic ' . env('ONESIGNAL_REST_API_KEY') // Your REST API Key
         ];
         $bodyRequest = [
-            'target_channel' => "push",
             'app_id' => env('ONESIGNAL_APP_ID'), // Your OneSignal App ID
             'included_segments' => ['All'], // Send to all users
             'headings' => ['en' => $dataMessage['title']], // Notification title
             'contents' => ['en' => $dataMessage['body']], // Notification content
+            'target_channel' => "push"
         ];
+
         try {
+            // dd($bodyRequest);4r
             $response = $client->post($api, [
                 'headers' => $headers,
-                'body' => json_encode($bodyRequest)
+                'json' => $bodyRequest,
             ]);
-
-            // Decode the response body if needed
-            $bodyResponse = json_decode($response->getBody()->getContents(), true);
-
-            return response()->json(['message' => 'Notification to All Users Created', 'response' => $bodyResponse]);
-
+            $responseBody = json_decode($response->getBody(), true);
+            return $responseBody;
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to send notification', 'message' => $e->getMessage()], 500);
+            return [
+                'error' => 'Failed to send notification',
+                'message' => $e->getMessage(),
+            ];
         }
+
     }
     public function sendNotificatonToSpesificUser($id)
     {
