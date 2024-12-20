@@ -24,7 +24,7 @@ class OrderController extends Controller
             "start_date" => "required",
             "start_time" => "required",
             "metode_pembayaran" => "required",
-            "bukti_bayar" => 'required|image|mimes:jpeg,png,jpg|max:2048'
+            "bukti_bayar" => 'image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
         $alat = Alat::where('id', $request->id_alat)->first();
@@ -42,7 +42,9 @@ class OrderController extends Controller
             $harga = $alat->harga24;
         }
 
-        $path = $request->file('bukti_bayar')->store('bukti_bayar');
+        if($request->file('bukti_bayar')){
+            $path = $request->file('bukti_bayar')->store('bukti_bayar');
+        }
 
         $pembayaran = new Payment();
 
