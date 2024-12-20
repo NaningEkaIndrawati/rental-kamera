@@ -42,6 +42,7 @@ class OrderController extends Controller
             $harga = $alat->harga24;
         }
 
+        $path = null;
         if($request->file('bukti_bayar')){
             $path = $request->file('bukti_bayar')->store('bukti_bayar');
         }
@@ -52,6 +53,7 @@ class OrderController extends Controller
         $pembayaran->penyewa_id = Auth::id();
         $pembayaran->total = $harga;
         $pembayaran->metode_pembayaran = $request->metode_pembayaran;
+        $pembayaran->bukti_upload = $path;
         $pembayaran->save();
         $orderStart = date('Y-m-d H:i', strtotime($request['start_date'].$request['start_time']));
         $oderEnd = date('Y-m-d H:i', strtotime($request['start_date'].$request['start_time']."+" . $request->waktu_sewa ." hours"));
