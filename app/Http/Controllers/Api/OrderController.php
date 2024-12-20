@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
     public function store(Request $request){
+        return response()->json($request->all());
 
         $request->validate([
             "id_alat" => "required",
