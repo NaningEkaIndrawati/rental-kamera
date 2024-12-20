@@ -40,7 +40,8 @@ class PenyewaController extends Controller
         ]);
 
         // Simpan file gambar
-        $path = $request->file('ktp')->store('storage\app\public\public\gambar_ktp'); // File akan disimpan di storage/app/public/ktp
+        $path = $request->file('ktp')->store('upload_ktp');
+        // File akan disimpan di storage/app/public/ktp
 
         // Simpan data penyewa
         Penyewa::create([
