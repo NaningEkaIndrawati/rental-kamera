@@ -13,17 +13,18 @@ use DateTime;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
     public function store(Request $request){
-        return response()->json($request->all());
-
         $request->validate([
             "id_alat" => "required",
             "waktu_sewa" => "required",
             "start_date" => "required",
             "start_time" => "required",
+            "metode_pembayaran" => "required",
+            "bukti_bayar" => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
         $alat = Alat::where('id', $request->id_alat)->first();
@@ -41,11 +42,14 @@ class OrderController extends Controller
             $harga = $alat->harga24;
         }
 
+        $path = $request->file('bukti_bayar')->store('bukti_bayar');
+
         $pembayaran = new Payment();
 
         $pembayaran->no_invoice = Auth::id()."/".Carbon::now()->timestamp;
         $pembayaran->penyewa_id = Auth::id();
         $pembayaran->total = $harga;
+        $pembayaran->metode_pembayaran = $request->metode_pembayaran;
         $pembayaran->save();
         $orderStart = date('Y-m-d H:i', strtotime($request['start_date'].$request['start_time']));
         $oderEnd = date('Y-m-d H:i', strtotime($request['start_date'].$request['start_time']."+" . $request->waktu_sewa ." hours"));
