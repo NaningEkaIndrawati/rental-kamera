@@ -40,11 +40,11 @@ class RentController extends Controller
     $response = $client->request('POST', 'https://api.fonnte.com/send', [
     'form_params' => [
         'target' => $noUser,
-        'message' => 'Reservasi Anda Dibatalkan hehe',
+        'message' => '  Mohon Maaf Reservasi Anda Dibatalkan🙏 ',
         'countryCode' => '62', //optional
     ],
     'headers' => [
-        'Authorization' => 'vGSwXaF8K#TSBieycJGj',
+        'Authorization' => 'wbwhqvxCpP6rB9PqWEU7',
     ],
         ]);
 
